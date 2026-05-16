@@ -158,15 +158,16 @@ jobs:
             }
 
   # ─── Job 5: Container Security Scan (if Dockerfile present) ─────────────────
+  # ─── Job 5: Container Security Scan (if Dockerfile present) ─────────────────
   container-scan:
     name: 🐳 Container Security Scan
     runs-on: ubuntu-latest
-    if: hashFiles('Dockerfile') != ''
+    if: ${{ hashFiles('part3/Dockerfile') != '' }}
     steps:
       - uses: actions/checkout@v4
 
       - name: Build Docker image
-        run: docker build -t lab-app:${{ github.sha }} .
+        run: docker build -t lab-app:${{ github.sha }} -f part3/Dockerfile part3
 
       - name: Run Trivy container scan
         uses: aquasecurity/trivy-action@master
