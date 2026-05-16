@@ -162,9 +162,11 @@ jobs:
   container-scan:
     name: 🐳 Container Security Scan
     runs-on: ubuntu-latest
-    if: ${{ hashFiles('part3/Dockerfile') != '' }}
     steps:
       - uses: actions/checkout@v4
+
+      - name: Check Dockerfile exists
+        run: test -f part3/Dockerfile || (echo "❌ No Dockerfile found" && exit 1)
 
       - name: Build Docker image
         run: docker build -t lab-app:${{ github.sha }} -f part3/Dockerfile part3
