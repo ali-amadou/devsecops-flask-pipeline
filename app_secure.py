@@ -131,6 +131,7 @@ def dashboard():
 @login_required
 def search():
     query = request.args.get("q", "")
+    query = re.sub(r"(?i)javascript:", "", query)
     # Jinja2 auto-escaping handles XSS - just pass to template
     return render_template("search.html", query=query)
 
