@@ -119,7 +119,7 @@ jobs:
 
       - name: Run security tests
         run: |
-          PYTHONPATH=. pytest part2/test_security.py -v \
+          PYTHONPATH=. pytest test_security.py -v \
             --tb=short \
             --junitxml=security_test_results.xml
 
@@ -128,7 +128,7 @@ jobs:
         if: always()
         with:
           name: security-test-results
-          path: part2/security_test_results.xml
+          path: security_test_results.xml
 
   # ─── Job 4: Secret Scanning ──────────────────────────────────────────────────
   secret-scan:
