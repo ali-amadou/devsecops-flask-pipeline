@@ -74,7 +74,7 @@ jobs:
       - name: Check dependencies for CVEs
         run: |
           safety check \
-            -r session1/requirements.txt \
+            -r requirements.txt \
             --json \
             --output safety_report.json || true
           
@@ -114,7 +114,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install -r session1/requirements.txt
+          pip install -r requirements.txt
           pip install pytest pytest-flask
 
       - name: Run security tests
@@ -165,10 +165,10 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Check Dockerfile exists
-        run: test -f part3/Dockerfile || (echo "❌ No Dockerfile found" && exit 1)
+        run: test -f Dockerfile || (echo "❌ No Dockerfile found" && exit 1)
 
       - name: Build Docker image
-        run: docker build -t lab-app:${{ github.sha }} -f part3/Dockerfile part3
+        run: docker build -t lab-app:${{ github.sha }} -f Dockerfile .
 
       - name: Run Trivy container scan
         uses: aquasecurity/trivy-action@master
@@ -189,7 +189,7 @@ jobs:
 
       - name: Start Flask app
         run: |
-          pip install -r session1/requirements.txt
+          pip install -r requirements.txt
           SECRET_KEY=testkey python session1/app_secure.py &
           sleep 3
           curl -f http://127.0.0.1:5001/ || exit 1
